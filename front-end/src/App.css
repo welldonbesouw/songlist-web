@@ -1,3 +1,13 @@
+.add-songs {
+  margin-top: -15px;
+  color: rgb(54, 54, 54) !important;
+}
+
+.arrow-pos {
+  position: relative;
+  top: -2px;
+}
+
 body {
   background-image: url("./assets/orange-bg-w-cross.png");
 }
@@ -40,13 +50,28 @@ body {
   text-align: center;
 }
 
+/* To make footer always at the bottom */
+.footer {
+  margin-top: auto;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+#root {
+  display: flex;
+  flex-direction: column;
+}
+/* To make footer always at the bottom */
+
 .icon-pointer {
   cursor: pointer;
 }
 
-/* .logo {
-  filter: drop-shadow(50px 50px 100px 0.75rem rgb(239, 239, 239));
-} */
+.instruction {
+  font-size: 0.9rem;
+}
 
 .navbar-shadow {
   box-shadow: 0 1px 5px 5px rgba(0, 0, 0, 0.4);
@@ -62,4 +87,8 @@ body {
 
 .tick-style {
   padding-bottom: 0.1rem;
+}
+
+.version-text {
+  font-size: 0.7rem;
 }

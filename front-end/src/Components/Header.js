@@ -12,7 +12,10 @@ const Header = () => {
         data-bs-theme="light"
       >
         <Container>
-          <Navbar.Brand href="/" className="fs-4 me-4">
+          <Navbar.Brand
+            href="/"
+            className="fs-4 me-4 d-flex align-items-center"
+          >
             <img
               alt=""
               src={Logo}
@@ -20,7 +23,10 @@ const Header = () => {
               height="37"
               className="d-inline-block align-top logo me-3"
             />
-            UnseenPdf
+            <div className="d-flex flex-column justify-content-center">
+              <h5 className="mb-0">UnseenSonglist</h5>
+              <p className="version-text m-0">Version 1.0.0</p>
+            </div>
           </Navbar.Brand>
           <SearchBar />
         </Container>

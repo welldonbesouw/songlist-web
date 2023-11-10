@@ -11,11 +11,11 @@ function generateService(pdfId, generatePdfRequest) {
 }
 
 function savePdfService(pdfId, generatePdfRequest) {
-  return axios.post(API_URL + "/savePdf", pdfId, generatePdfRequest);
+  return axios.post(API_URL + `/savePdf/${pdfId}`, generatePdfRequest);
 }
 
 function downloadService(fileName) {
-  return axios.get(API_URL + `/downloadPdf/${fileName}`);
+  return axios.get(API_URL + `/download/${fileName}`);
 }
 
 export { createService, generateService, savePdfService, downloadService };

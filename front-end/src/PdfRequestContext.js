@@ -19,8 +19,22 @@ export const PdfRequestProvider = ({ children }) => {
     },
   });
 
+  const [customization, setCustomization] = useState({
+    titleOne: "",
+    titleTwo: "",
+    titleThree: "",
+    titleOneSize: 16,
+    titleTwoSize: 16,
+    titleThreeSize: 16,
+    margin: 50,
+    fontSize: 14,
+    lineSpacing: 16,
+  });
+
   return (
-    <PdfRequestContext.Provider value={{ pdfRequest, setPdfRequest }}>
+    <PdfRequestContext.Provider
+      value={{ pdfRequest, setPdfRequest, customization, setCustomization }}
+    >
       {children}
     </PdfRequestContext.Provider>
   );

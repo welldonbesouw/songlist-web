@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Browse from "./browse";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   Button,
   Card,
   Col,
   Container,
-  Form,
-  InputGroup,
   Pagination,
   Row,
   Spinner,
@@ -18,6 +16,7 @@ import SongList from "../Components/SongList";
 import { usePdfRequest } from "../PdfRequestContext";
 import { Document, Page, pdfjs } from "react-pdf";
 import PdfForm from "../Components/PdfForm";
+import { TbArrowBigRightLineFilled } from "react-icons/tb";
 
 const CreatePdf = () => {
   // !!important
@@ -30,31 +29,39 @@ const CreatePdf = () => {
   const [fileName, setFileName] = useState("");
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [validated, setValidated] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  const [isPdfSaved, setIsPdfSaved] = useState(false);
+  const [isGenerateDisabled, setIsGenerateDisabled] = useState(true);
 
-  const { pdfRequest, setPdfRequest } = usePdfRequest();
+  const { pdfRequest, customization } = usePdfRequest();
   const { pdfId } = useParams();
   const { setPdfId } = usePdfId();
+
+  const ref = useRef(null);
 
   useEffect(() => {
     setPdfId(pdfId);
   }, [pdfId, setPdfId]);
 
-  useEffect(() => {
-    if (pdfData) {
-      setLoading(true);
-    }
-    console.log(pdfData);
-    console.log(loading);
-  }, [pdfData, loading]);
+  // useEffect(() => {
+  //   if (pdfData) {
+  //     setLoading(true);
+  //   }
+  //   console.log(pdfData);
+  //   console.log(loading);
+  // }, [pdfData, loading]);
 
-  const handleGenerate = async (e) => {
+  useEffect(() => {
+    if (customization.titleOne !== "") setIsGenerateDisabled(false);
+    else setIsGenerateDisabled(true);
+  }, [customization.titleOne]);
+
+  const handleGenerate = async () => {
     // Send pdfRequest as the payload
     try {
-      const delayedResponse = () =>
-        new Promise((resolve) => setTimeout(resolve, 1000));
-      await delayedResponse();
+      // const delayedResponse = () =>
+      //   new Promise((resolve) => setTimeout(resolve, 1000));
+      // await delayedResponse();
 
       const response = await generateService(pdfId, pdfRequest);
 
@@ -77,15 +84,22 @@ const CreatePdf = () => {
   const handleSave = () => {
     try {
       // Send pdfRequest as the payload
-      savePdfService(pdfRequest).then((response) => {
+      savePdfService(pdfId, pdfRequest).then((response) => {
         setFileName(response.data);
       });
+      enableDownload();
     } catch (error) {
       console.error("Error saving PDF:", error);
     }
   };
 
-  const handleDownload = () => {};
+  const enableDownload = () => {
+    setIsPdfSaved(true);
+  };
+
+  const disableDownload = () => {
+    setIsPdfSaved(false);
+  };
 
   const handleNextPage = () => {
     if (pageNumber < numPages) {
@@ -109,13 +123,19 @@ const CreatePdf = () => {
           <Col sm={12} lg={6}>
             <Card className="mb-4">
               <Card.Header as={"h4"}>Song List</Card.Header>
-              <Card.Body>
-                <SongList />
-                {/* <h1>PDF Generator</h1> */}
+              <Card.Body className="pb-1">
+                <SongList ref={ref} />
+                {pdfRequest.selectedSongs.length === 0 ? (
+                  <h5 className="add-songs">Let's add some songs!</h5>
+                ) : (
+                  <></>
+                )}
+
                 <Button
                   className="mt-3"
                   variant="dark"
                   onClick={() => handleGenerate()}
+                  disabled={isGenerateDisabled}
                 >
                   Generate PDF
                 </Button>
@@ -123,9 +143,29 @@ const CreatePdf = () => {
                   className="mt-3 ms-3"
                   variant="dark"
                   onClick={() => handleSave()}
+                  disabled={isGenerateDisabled}
                 >
                   Save PDF
                 </Button>
+                {isPdfSaved ? (
+                  <Link
+                    to={`http://localhost:8080/api/pdf/download/${fileName}`}
+                    download
+                    onClick={() => disableDownload()}
+                  >
+                    <Button className="mt-3 ms-3" variant="dark">
+                      Download PDF
+                    </Button>
+                  </Link>
+                ) : (
+                  <></>
+                )}
+                <p className="mt-1 mb-1 text-danger instruction">
+                  *Generate
+                  <TbArrowBigRightLineFilled className="arrow-pos me-1 ms-1" />
+                  Save <TbArrowBigRightLineFilled className="arrow-pos me-1" />
+                  Download
+                </p>
               </Card.Body>
             </Card>
           </Col>
@@ -170,7 +210,6 @@ const CreatePdf = () => {
                     </Pagination>
                   </div>
                 </div>
-                <Button onClick={handleDownload}>Download PDF</Button>
               </>
             ) : (
               <>

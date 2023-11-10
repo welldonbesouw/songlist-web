@@ -27,6 +27,9 @@ const SearchBar = () => {
           placeholder="Search song"
           onChange={(e) => setKeyword(e.target.value)}
           value={keyword}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") searchSong();
+          }}
         />
         <InputGroup.Text>
           <Button onClick={() => searchSong()} variant="dark">

@@ -103,7 +103,7 @@ const Browse = () => {
             </Col>
           ))}
         </Row>
-        {keyword !== null ? (
+        {songs.length !== 0 ? (
           <div className="mt-5">
             <Pagination>
               <Pagination.First

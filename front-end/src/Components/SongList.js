@@ -91,18 +91,6 @@ const SongList = () => {
       comments: updatedComments,
     });
   };
-  // This is alternative code !!
-  // const addComment = () => {
-  //   // Update the comment for the selected song
-  //   setSongList((prevSongList) => {
-  //     const updatedSongList = { ...prevSongList };
-  //     const songIndex = updatedSongList.songs.findIndex((song) => song.id === selectedSongId);
-  //     updatedSongList.comments[songIndex] = { songId: selectedSongId, text: comment };
-  //     return updatedSongList;
-  //   });
-
-  //   handleClose(); // Close the modal after saving the comment
-  // };
 
   const handleClose = () => {
     setShow(false);
@@ -157,11 +145,7 @@ const SongList = () => {
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              <Modal
-                // root={documentBodyRef.current}
-                show={show}
-                onHide={handleClose}
-              >
+              <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                   <Modal.Title>Add Comment</Modal.Title>
                 </Modal.Header>

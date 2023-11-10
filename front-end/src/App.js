@@ -7,6 +7,7 @@ import Song from "./Pages/song";
 import Header from "./Components/Header";
 import CreatePdf from "./Pages/createPdf";
 import { SongListProvider } from "./SongListContext";
+import Footer from "./Components/Footer";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path=":keyword" element={<CreatePdf />} />
           </Route>
         </Routes>
+        <Footer />
       </SongListProvider>
     </>
   );

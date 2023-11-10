@@ -1,12 +1,14 @@
 package com.unseensonglist.songlist.controller;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -61,7 +63,7 @@ public class PdfController {
 		}
 	}
 	
-	@PostMapping("/savePdf")
+	@PostMapping("/savePdf/{id}")
 	public ResponseEntity<String> savePdf(@PathVariable Long id, @RequestBody GeneratePdfRequest request) {
 		List<Song> selectedSongs = request.getSelectedSongs();
 		List<CustomCommentRequest> comments = request.getComments();
@@ -80,7 +82,7 @@ public class PdfController {
 	public ResponseEntity<Resource> downloadPdf(@PathVariable String fileName) {
 		try {
 			// Define the path to the "temp-pdfs" folder
-			Path filePath = Paths.get("temp-pdfs", fileName);
+			Path filePath = Paths.get("/Users/welldonbesouw/Documents/songlist-repo/temp-pdfs/", fileName);
 			Resource resource = new UrlResource(filePath.toUri());
 
 			if (resource.exists()) {
@@ -95,41 +97,5 @@ public class PdfController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-//	@GetMapping("/generatePdf")
-//	public ResponseEntity<String> generatePdf(@RequestBody GeneratePdfRequest request) {
-//		List<Song> selectedSongs = request.getSelectedSongs();
-//		List<CustomComment> comments =request.getComments();
-//		PdfCustomizationOptions customizationOptions = request.getCustomizationOptions();
-//
-//		String fileName = pdfService.generateSongList(selectedSongs, comments, customizationOptions);
-//
-//		if (fileName != null) {
-//			return ResponseEntity.ok(fileName);
-//		} else {
-//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("PDF generation failed.");
-//		}
-//	}
-//
-//	@GetMapping("/previewPdf/{fileName}")
-//	public ResponseEntity<InputStreamResource> previewPdf(@PathVariable String fileName) {
-//		try {
-//			// Construct the full path to the PDF file
-//			Path filePath = Paths.get(pdfStoragePath, fileName);
-//			File pdfFile = filePath.toFile();
-//
-//			if (pdfFile.exists()) {
-//				InputStreamResource resource = new InputStreamResource(new FileInputStream(pdfFile));
-//
-//				HttpHeaders headers = new HttpHeaders();
-//				headers.setContentType(MediaType.APPLICATION_PDF);
-//
-//				return ResponseEntity.ok().headers(headers).contentLength(pdfFile.length()).body(resource);
-//			} else {
-//				return ResponseEntity.notFound().build();
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//		}
-//	}
+
 }

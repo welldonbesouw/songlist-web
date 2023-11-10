@@ -73,7 +73,7 @@ public class PdfService {
 			String fileName = "SongList_" + System.currentTimeMillis() + ".pdf";
 
 			// Define the path where the PDF will be saved temporarily
-			String filePath = "temp-pdfs/" + fileName;
+			String filePath = "/Users/welldonbesouw/Documents/songlist-repo/temp-pdfs/" + fileName;
 
 			// Save the PDF to the defined path
 			document.save(filePath);
@@ -184,9 +184,28 @@ public class PdfService {
 				xPosition = margin;
 				startText(contentStream, options.getLineSpacing(), xPosition, yPosition, fontBold, options.getFontSize());
 			}
+			String songTitle = songNumber + ". " + song.getTitle();
+			float songTitleWidth = fontBold.getStringWidth(songTitle) / 1000 * options.getFontSize();
+			if(songTitleWidth > colWidth) {
+				float totalWidth = 0;
+				String[] songTitleArr = songTitle.split(" ");
+				
+				for(String word : songTitleArr) {
+					float wordWidth = fontBold.getStringWidth(" " + word) / 1000 * options.getFontSize();
+					totalWidth += wordWidth;
+					if(totalWidth > colWidth) {
+						contentStream.newLine(); // The error is here
+						yPosition -= options.getLineSpacing();
+						totalWidth = 0;
+					}
+					contentStream.showText(word + " ");
+				}
+				contentStream.newLine();
+			} else {
+				contentStream.showText(songTitle);
+				contentStream.newLine();				
+			}
 			
-			contentStream.showText(songNumber + ". " + song.getTitle());
-			contentStream.newLine();
 			contentStream.setFont(fontItalic, (float) (options.getFontSize() * 0.9));
 			contentStream.showText("Do = " + song.getKey());
 			contentStream.newLine();
@@ -256,7 +275,7 @@ public class PdfService {
 					String[] wordArr = text.split(" ");
 					
 					for(String word : wordArr) {
-						float wordWidth = fontRegular.getStringWidth(word) / 1000 * options.getFontSize();
+						float wordWidth = fontRegular.getStringWidth(" " + word) / 1000 * options.getFontSize();
 						totalWidth += wordWidth;
 						if(totalWidth > colWidth) {
 							contentStream.newLine(); // The error is here
@@ -390,57 +409,57 @@ public class PdfService {
 		stream.setFont(font, fontSize);
 	}
 
-	private PDPageContentStream moveToColumn2(PDDocument document, PDPage page, float x, float x2, float y, float yStart,
-					boolean isFirstPage, float yFirstPage, int column, PDPageContentStream stream) throws IOException {
-		x = x2;
-		if(!isFirstPage) y = yStart;
-		else y = yFirstPage;
-		isFirstPage = false;
-		column = 2;
-		stream.endText();
-		stream.close();
-		stream = new PDPageContentStream(document, page, AppendMode.APPEND, true);
-		return stream;
-	}
-	
-	private PDPageContentStream moveToNextPage(PDPageContentStream stream, PDPage page, PDDocument document, float y, float yStart, int column, float x, float margin) throws IOException {
-		stream.endText();
-		stream.close();
-		page = new PDPage(PDRectangle.A4);
-		document.addPage(page);
-		stream = new PDPageContentStream(document, page);
-		y = yStart;
-		column = 1;
-		x = margin;
-		return stream;
-	}
-	
-	private void moveToNextColumnOrPage(PDPageContentStream stream, PDDocument document, PDPage page, float margin, int column, float x, float x2, float y,
-									boolean isFirstPage, float yStart, float yFirstPage, PDFont font, PdfCustomizationOptions options, float fontSize) throws IOException {
-		if (y < margin && column == 1) {
-			x = x2;
-			if(!isFirstPage) y = yStart;
-			else y = yFirstPage;
-			isFirstPage = false;
-			column = 2;
-			stream.endText();
-			stream.close();
-			stream = new PDPageContentStream(document, page, AppendMode.APPEND, true);
-			startText(stream, options.getLineSpacing(), x, y, font, (float) fontSize);
-
-		} else if (y < margin && column == 2) {
-			// Start a new page if the content exceeds the page height
-			stream.endText();
-			stream.close();
-			page = new PDPage(PDRectangle.A4);
-			document.addPage(page);
-			stream = new PDPageContentStream(document, page);
-			y = yStart;
-			column = 1;
-			x = margin;
-			startText(stream, options.getLineSpacing(), x, y, font, (float) fontSize);
-		}
-	}
+//	private PDPageContentStream moveToColumn2(PDDocument document, PDPage page, float x, float x2, float y, float yStart,
+//					boolean isFirstPage, float yFirstPage, int column, PDPageContentStream stream) throws IOException {
+//		x = x2;
+//		if(!isFirstPage) y = yStart;
+//		else y = yFirstPage;
+//		isFirstPage = false;
+//		column = 2;
+//		stream.endText();
+//		stream.close();
+//		stream = new PDPageContentStream(document, page, AppendMode.APPEND, true);
+//		return stream;
+//	}
+//	
+//	private PDPageContentStream moveToNextPage(PDPageContentStream stream, PDPage page, PDDocument document, float y, float yStart, int column, float x, float margin) throws IOException {
+//		stream.endText();
+//		stream.close();
+//		page = new PDPage(PDRectangle.A4);
+//		document.addPage(page);
+//		stream = new PDPageContentStream(document, page);
+//		y = yStart;
+//		column = 1;
+//		x = margin;
+//		return stream;
+//	}
+//	
+//	private void moveToNextColumnOrPage(PDPageContentStream stream, PDDocument document, PDPage page, float margin, int column, float x, float x2, float y,
+//									boolean isFirstPage, float yStart, float yFirstPage, PDFont font, PdfCustomizationOptions options, float fontSize) throws IOException {
+//		if (y < margin && column == 1) {
+//			x = x2;
+//			if(!isFirstPage) y = yStart;
+//			else y = yFirstPage;
+//			isFirstPage = false;
+//			column = 2;
+//			stream.endText();
+//			stream.close();
+//			stream = new PDPageContentStream(document, page, AppendMode.APPEND, true);
+//			startText(stream, options.getLineSpacing(), x, y, font, (float) fontSize);
+//
+//		} else if (y < margin && column == 2) {
+//			// Start a new page if the content exceeds the page height
+//			stream.endText();
+//			stream.close();
+//			page = new PDPage(PDRectangle.A4);
+//			document.addPage(page);
+//			stream = new PDPageContentStream(document, page);
+//			y = yStart;
+//			column = 1;
+//			x = margin;
+//			startText(stream, options.getLineSpacing(), x, y, font, (float) fontSize);
+//		}
+//	}
 	
 	private void splitText(int column, String text, float x, float y, float margin, float rightMargin, float x2) {
 		if(column == 1) rightMargin = x2 - 50;

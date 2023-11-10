@@ -1,33 +1,42 @@
 import React, { useState } from "react";
 import { Button, Card, Col, Form, InputGroup, Row } from "react-bootstrap";
 import { usePdfRequest } from "../PdfRequestContext";
+import { TiTick } from "react-icons/ti";
 
 const PdfForm = (validated) => {
   // const [validated, setValidated] = useState(false);
-  const [customization, setCustomization] = useState({
-    titleOne: "",
-    titleTwo: "",
-    titleThree: "",
-    titleOneSize: 16,
-    titleTwoSize: 16,
-    titleThreeSize: 16,
-    margin: 50,
-    fontSize: 14,
-    lineSpacing: 16,
-  });
+  // const [customization, setCustomization] = useState({
+  //   titleOne: "",
+  //   titleTwo: "",
+  //   titleThree: "",
+  //   titleOneSize: 16,
+  //   titleTwoSize: 16,
+  //   titleThreeSize: 16,
+  //   margin: 50,
+  //   fontSize: 14,
+  //   lineSpacing: 16,
+  // });
 
-  const { pdfRequest, setPdfRequest } = usePdfRequest();
+  const [isApplied, setIsApplied] = useState(false);
+  const [titleOneWarning, setTitleOneWarning] = useState(false);
+
+  const { pdfRequest, setPdfRequest, customization, setCustomization } =
+    usePdfRequest();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.stopPropagation();
+    if (customization.titleOne !== "") {
+      const form = e.currentTarget;
+      if (form.checkValidity() === false) {
+        e.stopPropagation();
+      }
+      setPdfRequest({ ...pdfRequest, customizationOptions: customization });
+      validated = true;
+      showAppliedText();
+      setTitleOneWarning(false);
+    } else {
+      setTitleOneWarning(true);
     }
-    validated = true;
-    console.log(validated);
-    setPdfRequest({ ...pdfRequest, customizationOptions: customization });
-    console.log(pdfRequest.customizationOptions);
   };
 
   const handleValueChange = (e, line) => {
@@ -38,9 +47,16 @@ const PdfForm = (validated) => {
     console.log("customization is", customization);
   };
 
+  const showAppliedText = () => {
+    setIsApplied(true);
+    setTimeout(() => {
+      setIsApplied(false);
+    }, 3000);
+  };
+
   return (
     <>
-      <Card className="mb-2" style={{ maxWidth: "45rem" }}>
+      <Card className="mt-3 mb-2" style={{ maxWidth: "45rem" }}>
         <Form
           noValidate
           validated={validated}
@@ -222,9 +238,24 @@ const PdfForm = (validated) => {
               </InputGroup>
             </Col>
           </Form.Group>
-          <div className="d-flex justify-content-end">
+          <div className="d-flex justify-content-end align-items-center">
+            {isApplied ? (
+              <h6 className="text-success me-3">
+                <TiTick lg />
+                Applied
+              </h6>
+            ) : (
+              <></>
+            )}
+            {titleOneWarning ? (
+              <h6 className="text-danger me-3">
+                Title at line 1 must not be empty!
+              </h6>
+            ) : (
+              <></>
+            )}
             <Button
-              className="mb-2"
+              className="mb-2 apply-button"
               type="submit"
               variant="dark"
               style={{ width: "8rem" }}

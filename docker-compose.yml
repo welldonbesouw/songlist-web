@@ -1,0 +1,39 @@
+verison: 3
+services:
+  back-end:
+    build:
+      context: back-end
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      DB_URL: jdbc:mysql://mysql-db/songlist_db
+      DB_USERNAME: unseen-songlist
+      DB_PASSWORD: Godblessyou777
+    depends_on:
+      - my-mysql
+  front-end:
+    build:
+      context: front-end
+      dockerfile: Dockerfile
+    ports:
+      - 3000:80
+    depends_on:
+      - back-end
+  my-mysql:
+    image: mysql:8.0.12
+    volumes: 
+      - dbdata:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: songlist_db
+      MYSQL_ROOT_PASSWORD: Godblessyou777
+      MYSQL_USER: unseen-songlist
+      MYSQL_PASSWORD: Godblessyou999
+  web-server:
+    image: nginx:1.25.3
+    ports:
+      - 80:80
+    depends_on:
+      - front-end
+volumes:
+  dbdata:
