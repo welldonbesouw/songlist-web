@@ -17,7 +17,7 @@ services:
       context: front-end
       dockerfile: Dockerfile
     ports:
-      - 3000:80
+      - 80:80
     depends_on:
       - back-end
   my-mysql:
@@ -33,7 +33,10 @@ services:
     image: nginx:1.25.3
     ports:
       - 80:80
+      - 443:443
     depends_on:
       - front-end
+    volumes:
+      - ./nginx/conf/:/etc/nginx/conf.d/:ro
 volumes:
   dbdata:

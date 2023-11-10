@@ -12,7 +12,7 @@ RUN npm run build
 
 # CMD [ "npm", "start" ]
 
-FROM nginx:1.25.3
+FROM nginx:1.25.3-alpine
 
 # Copy the built app from the previous stage to the Nginx public directory
 COPY --from=build /app/build /usr/share/nginx/html
