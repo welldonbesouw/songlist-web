@@ -30,7 +30,7 @@ services:
       MYSQL_USER: unseen-songlist
       MYSQL_PASSWORD: Godblessyou999
   web-server:
-    image: nginx:1.25.3
+    image: nginx:1.25.3-alpine
     ports:
       - 80:80
       - 443:443
