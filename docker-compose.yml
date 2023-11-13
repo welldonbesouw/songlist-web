@@ -1,8 +1,8 @@
-verison: 3
+version: "3"
 services:
   back-end:
     build:
-      context: back-end
+      context: back-end/songlist
       dockerfile: Dockerfile
     ports:
       - 8080:8080
@@ -17,9 +17,11 @@ services:
       context: front-end
       dockerfile: Dockerfile
     ports:
-      - 80:80
+      - 3000:80
     depends_on:
       - back-end
+    environment:
+      - NODE_OPTIONS=--max-old-space-size=4096
   my-mysql:
     image: mysql:8.0.12
     volumes: 

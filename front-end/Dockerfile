@@ -1,6 +1,9 @@
-FROM node:16.20-alpine as build
+FROM node:20.9-alpine as build
 
 WORKDIR /app
+
+# Set Node.js heap size to 4 GB
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 
 COPY package*.json ./
 
