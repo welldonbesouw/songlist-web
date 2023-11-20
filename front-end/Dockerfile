@@ -17,11 +17,12 @@ RUN npm run build
 
 FROM nginx:1.25.3-alpine
 
-RUN chown -R nginx:nginx /usr/share/nginx/html
+RUN rm -rf /usr/share/nginx/html
 # Copy the built app from the previous stage to the Nginx public directory
-COPY --from=build ./app/build /usr/share/nginx/html
+COPY --from=build /app/build /usr/share/nginx/html
 
 # Adjust permissions
+RUN chown -R nginx:nginx /usr/share/nginx/html
 
 # EXPOSE 80
 
