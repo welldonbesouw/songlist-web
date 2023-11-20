@@ -7,9 +7,9 @@ services:
     ports:
       - 8080:8080
     environment:
-      DB_URL: jdbc:mysql://mysql-db/songlist_db
-      DB_USERNAME: unseen-songlist
-      DB_PASSWORD: Godblessyou777
+        DB_URL: jdbc:mysql://mysql-db/songlist_db
+        DB_USERNAME: unseenuser
+        DB_PASSWORD: godblessyou
     depends_on:
       - my-mysql
   front-end:
@@ -28,9 +28,9 @@ services:
       - dbdata:/var/lib/mysql
     environment:
       MYSQL_DATABASE: songlist_db
-      MYSQL_ROOT_PASSWORD: Godblessyou777
-      MYSQL_USER: unseen-songlist
-      MYSQL_PASSWORD: Godblessyou999
+      MYSQL_USER: unseenuser
+      MYSQL_PASSWORD: godblessyou
+      MYSQL_ROOT_PASSWORD: godblessyou
   web-server:
     image: nginx:1.25.3-alpine
     ports:
@@ -39,6 +39,6 @@ services:
     depends_on:
       - front-end
     volumes:
-      - ./nginx/conf/:/etc/nginx/conf.d/:ro
+      - ./nginx/conf/unseen-songlist.com.conf:/etc/nginx/conf.d/unseen-songlist.com.conf:ro
 volumes:
   dbdata:
