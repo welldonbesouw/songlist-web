@@ -25,11 +25,11 @@ RUN sudo npm install npm@latest -g
 ENV NODE_OPTIONS=--max-old-space-size=4096
 
 # Install Nginx
-apt-get install nginx python3-certbot-nginx -y
+RUN apt-get install nginx python3-certbot-nginx -y
 
 # Install Java 17 and Maven
-sudo apt-get install openjdk-17-jdk
-sudo apt install maven
+RUN sudo apt-get install openjdk-17-jdk
+RUN sudo apt install maven
 
 # Verify Docker Compose is installed
 RUN docker-compose --version
