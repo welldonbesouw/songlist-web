@@ -19,8 +19,7 @@ RUN chmod 755 /usr/local/bin/docker-compose
 
 # Install React
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-RUN NODE_MAJOR=20
-RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
 RUN sudo apt-get update
 RUN sudo apt-get install nodejs -y
 
@@ -29,9 +28,9 @@ ENV NODE_OPTIONS=--max-old-space-size=4096
 # Install Nginx
 RUN apt-get install nginx python3-certbot-nginx -y
 
-# Install Java 17 and Maven
-RUN sudo apt-get install openjdk-17-jdk
-RUN sudo apt install maven
+# Install Java 17 and Maven | sed command to fix "Daemon using outdated libraries"
+RUN sudo apt-get install openjdk-17-jdk -y | sed "/#\$nrconf{restart} = 'i';/s/.*/\$nrconf{restart} = 'a';/" /etc/needrestart/needrestart.conf
+RUN sudo apt install maven | sed "/#\$nrconf{restart} = 'i';/s/.*/\$nrconf{restart} = 'a';/" /etc/needrestart/needrestart.conf
 
 # Verify Docker Compose is installed
 RUN docker-compose --version
