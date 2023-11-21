@@ -5,7 +5,7 @@ services:
       context: back-end/songlist
       dockerfile: Dockerfile
     ports:
-      - 80:8080
+      - 8080:80
     environment:
         DB_URL: jdbc:mysql://mysql-db/songlist_db
         DB_USERNAME: unseenuser
