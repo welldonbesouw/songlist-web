@@ -43,5 +43,5 @@ RUN npm install
 
 # Start project
 RUN docker-compose up -d
-EXPOSE WEBSITE http://localhost:5001 /api
+EXPOSE WEBSITE http://localhost:5000 /api
 EXPOSE WEBSITE http://localhost:3000 /
