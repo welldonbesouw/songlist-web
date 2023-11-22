@@ -7,7 +7,7 @@ services:
     ports:
       - 8080:8080
     environment:
-        DB_URL: jdbc:mysql://mysql-db/songlist_db
+        DB_URL: jdbc:mysql://my-mysql/songlist_db
         DB_USERNAME: unseenuser
         DB_PASSWORD: godblessyou
     ports:
