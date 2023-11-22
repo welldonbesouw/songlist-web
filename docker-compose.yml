@@ -10,6 +10,8 @@ services:
         DB_URL: jdbc:mysql://mysql-db/songlist_db
         DB_USERNAME: unseenuser
         DB_PASSWORD: godblessyou
+    ports:
+      - 3307:3306
     depends_on:
       - my-mysql
   front-end:
