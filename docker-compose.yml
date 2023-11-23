@@ -4,10 +4,10 @@ services:
     build:
       context: back-end/songlist
       dockerfile: Dockerfile
-    expose:
-      - 5001
+    ports:
+      - 8080:8080
     environment:
-        DB_URL: jdbc:mysql://my-mysql/songlist_db
+        DB_URL: jdbc:mysql://localhost:3306/songlist_db
         DB_USERNAME: unseenuser
         DB_PASSWORD: godblessyou
     depends_on:
@@ -30,8 +30,8 @@ services:
     image: mysql:8.0.12
     volumes: 
       - dbdata:/var/lib/mysql
-    expose:
-      - 3306
+    ports:
+      - 3307:3306
     environment:
       MYSQL_DATABASE: songlist_db
       MYSQL_USER: unseenuser
