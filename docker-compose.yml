@@ -1,23 +1,25 @@
 version: "3"
 services:
   back-end:
+    container_name: springboot-app
     build:
       context: back-end/songlist
       dockerfile: Dockerfile
     ports:
       - 8080:8080
     environment:
-        DB_URL: jdbc:mysql://localhost:3306/songlist_db
+        DB_URL: jdbc:mysql://mysql-db/songlist_db
         DB_USERNAME: unseenuser
         DB_PASSWORD: godblessyou
     depends_on:
       - my-mysql
   front-end:
+    container_name: react-app
     build:
       context: front-end
       dockerfile: Dockerfile
     ports:
-      - 3000:80
+      - 3000:3000
       - 443:443
     depends_on:
       - back-end
@@ -31,7 +33,7 @@ services:
     volumes: 
       - dbdata:/var/lib/mysql
     ports:
-      - 3307:3306
+      - 3306:3306
     environment:
       MYSQL_DATABASE: songlist_db
       MYSQL_USER: unseenuser

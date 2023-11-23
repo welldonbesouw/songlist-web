@@ -37,5 +37,7 @@ COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
 
 # USER 1001
 
+EXPOSE 8080
+
 # ENTRYPOINT ["java", "-cp","app:app/lib/*","com.unseensonglist.songlist.SonglistApplication"]
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -cp app:app/lib/* com.unseensonglist.songlist.SonglistApplication"]
