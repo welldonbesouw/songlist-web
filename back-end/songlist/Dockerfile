@@ -1,6 +1,8 @@
 #### Stage 1: Build the application
 FROM eclipse-temurin:17-jdk-alpine as build
 
+EXPOSE 8080
+
 # ENV JAVA_HOME=/opt/java/openjdk
 
 # Set the current working directory inside the image
@@ -36,8 +38,6 @@ COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
 
 # USER 1001
-
-EXPOSE 8080
 
 # ENTRYPOINT ["java", "-cp","app:app/lib/*","com.unseensonglist.songlist.SonglistApplication"]
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -cp app:app/lib/* com.unseensonglist.songlist.SonglistApplication"]

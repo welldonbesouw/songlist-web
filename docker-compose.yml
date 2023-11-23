@@ -13,13 +13,15 @@ services:
         DB_PASSWORD: godblessyou
     depends_on:
       - my-mysql
+    networks:
+      - spring-mysql
   front-end:
     container_name: react-app
     build:
       context: front-end
       dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - 3000:80
       - 443:443
     depends_on:
       - back-end
@@ -39,5 +41,9 @@ services:
       MYSQL_USER: unseenuser
       MYSQL_PASSWORD: godblessyou
       MYSQL_ROOT_PASSWORD: godblessyou
+    networks:
+      - spring-mysql
 volumes:
   dbdata:
+networks:
+  spring-mysql:
