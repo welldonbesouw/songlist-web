@@ -26,6 +26,7 @@ services:
     volumes:
       - ./nginx/conf/unseen-songlist.com.conf:/etc/nginx/conf.d/default.conf:ro
   my-mysql:
+    container_name: mysql-db
     image: mysql:8.0.12
     volumes: 
       - dbdata:/var/lib/mysql
