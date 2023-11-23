@@ -17,7 +17,7 @@ services:
       context: front-end
       dockerfile: Dockerfile
     ports:
-      - 80:80
+      - 3000:80
       - 443:443
     depends_on:
       - back-end
