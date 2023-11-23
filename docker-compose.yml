@@ -4,7 +4,7 @@ services:
     build:
       context: back-end/songlist
       dockerfile: Dockerfile
-    expose: [5001]
+    expose: "5001"
     environment:
         DB_URL: jdbc:mysql://my-mysql/songlist_db
         DB_USERNAME: unseenuser
