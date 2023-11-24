@@ -7,11 +7,16 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8080:8080
+    restart: always
     depends_on:
       - mysql-db
+    environment:
+        SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/songlist_db?useSSL=false
+        SPRING_DATASOURCE_USERNAME: unseenuser
+        SPRING_DATASOURCE_PASSWORD: godblessyou
     networks:
-      - spring-mysql
-      - spring-react
+      - frontend
+      - backend
   front-end:
     container_name: react-app
     build:
@@ -19,7 +24,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3000:80
-      - 443:443
+    restart: always
     depends_on:
       - back-end
     environment:
@@ -27,7 +32,7 @@ services:
     volumes:
       - ./nginx/conf/unseen-songlist.com.conf:/etc/nginx/conf.d/default.conf:ro
     networks:
-      - spring-react
+      - frontend 
   mysql-db:
     container_name: mysql-db
     image: mysql:8.0.12
@@ -35,15 +40,16 @@ services:
       - dbdata:/var/lib/mysql
     ports:
       - 3306:3306
+    restart: always
     environment:
       MYSQL_DATABASE: songlist_db
       MYSQL_USER: unseenuser
       MYSQL_PASSWORD: godblessyou
       MYSQL_ROOT_PASSWORD: godblessyou
     networks:
-      - spring-mysql
+      - backend
 volumes:
   dbdata:
 networks:
-  spring-mysql:
-  spring-react:
+  backend:
+  frontend:
