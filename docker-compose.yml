@@ -35,7 +35,7 @@ services:
       - frontend 
   mysql-db:
     container_name: mysql-db
-    image: mysql:5.7
+    image: mysql:8.0.12
     volumes: 
       - dbdata:/var/lib/mysql
     ports:
