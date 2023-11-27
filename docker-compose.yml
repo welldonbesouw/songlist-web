@@ -8,12 +8,12 @@ services:
     ports:
       - 8080:8080
     restart: always
+    environment:
+      DB_URL: jdbc:mysql://mysql-db/songlist_db
+      DB_USERNAME: unseenuser
+      DB_PASSWORD: godblessyou
     depends_on:
       - mysql-db
-    environment:
-        SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/songlist_db?useSSL=false
-        SPRING_DATASOURCE_USERNAME: unseenuser
-        SPRING_DATASOURCE_PASSWORD: godblessyou
     networks:
       - frontend
       - backend

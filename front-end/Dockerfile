@@ -24,6 +24,6 @@ COPY --from=build /app/build /usr/share/nginx/html
 # Adjust permissions
 RUN chown -R nginx:nginx /usr/share/nginx/html
 
-EXPOSE 80
+# EXPOSE 80
 
 ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
