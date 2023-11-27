@@ -39,7 +39,7 @@ services:
     volumes: 
       - dbdata:/var/lib/mysql
     ports:
-      - 3306:3306
+      - 3307:3306
     restart: always
     environment:
       MYSQL_DATABASE: songlist_db
