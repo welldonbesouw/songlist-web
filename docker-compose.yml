@@ -39,8 +39,6 @@ services:
     image: mysql:8.0.12
     volumes: 
       - dbdata:/var/lib/mysql
-    ports:
-      - 3307:3306
     restart: always
     environment:
       MYSQL_DATABASE: songlist_db
