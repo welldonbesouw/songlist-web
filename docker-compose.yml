@@ -5,8 +5,8 @@ services:
     build:
       context: back-end/songlist
       dockerfile: Dockerfile
-    expose:
-      - 80
+    ports:
+      - 8080:8080
     restart: always
     environment:
       DB_URL: jdbc:mysql://mysql-db/songlist_db
@@ -22,8 +22,9 @@ services:
     build:
       context: front-end
       dockerfile: Dockerfile
-    expose:
-      - 80
+    ports:
+      - 80:80
+      - 443:443
     restart: always
     depends_on:
       - back-end
@@ -39,8 +40,6 @@ services:
     volumes: 
       - dbdata:/var/lib/mysql
     restart: always
-    ports:
-      - 3306
     environment:
       MYSQL_DATABASE: songlist_db
       MYSQL_USER: unseenuser
