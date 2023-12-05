@@ -14,7 +14,7 @@ import { usePdfId } from "../PdfIdContext";
 import { generateService, savePdfService } from "../Services/pdfService";
 import SongList from "../Components/SongList";
 import { usePdfRequest } from "../PdfRequestContext";
-import { Document, Page, pdfjs } from "react-pdf/dist/esm/entry.webpack";
+import { Document, Page, pdfjs } from "react-pdf";
 import PdfForm from "../Components/PdfForm";
 import { TbArrowBigRightLineFilled } from "react-icons/tb";
 
