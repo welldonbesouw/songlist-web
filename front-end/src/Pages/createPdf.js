@@ -45,14 +45,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/l
     setPdfId(pdfId);
   }, [pdfId, setPdfId]);
 
-  // useEffect(() => {
-  //   if (pdfData) {
-  //     setLoading(true);
-  //   }
-  //   console.log(pdfData);
-  //   console.log(loading);
-  // }, [pdfData, loading]);
-
   useEffect(() => {
     if (customization.titleOne !== "") setIsGenerateDisabled(false);
     else setIsGenerateDisabled(true);
@@ -61,14 +53,9 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/l
   const handleGenerate = async () => {
     // Send pdfRequest as the payload
     try {
-      // const delayedResponse = () =>
-      //   new Promise((resolve) => setTimeout(resolve, 1000));
-      // await delayedResponse();
-
       const response = await generateService(pdfId, pdfRequest);
 
       setPdfData(response.data);
-      console.log("pdfData is", pdfData);
     } catch (error) {
       console.error("Error generating PDF preview", error);
     }
@@ -76,7 +63,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/l
 
   const onDocumentLoadSuccess = ({ numPages }) => {
     try {
-      console.log("loaded pdf data is:", pdfData);
       setNumPages(numPages);
     } catch (error) {
       console.log("Error occurred.");

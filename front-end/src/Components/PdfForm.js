@@ -4,18 +4,6 @@ import { usePdfRequest } from "../PdfRequestContext";
 import { TiTick } from "react-icons/ti";
 
 const PdfForm = (validated) => {
-  // const [validated, setValidated] = useState(false);
-  // const [customization, setCustomization] = useState({
-  //   titleOne: "",
-  //   titleTwo: "",
-  //   titleThree: "",
-  //   titleOneSize: 16,
-  //   titleTwoSize: 16,
-  //   titleThreeSize: 16,
-  //   margin: 50,
-  //   fontSize: 14,
-  //   lineSpacing: 16,
-  // });
 
   const [isApplied, setIsApplied] = useState(false);
   const [titleOneWarning, setTitleOneWarning] = useState(false);
@@ -44,7 +32,6 @@ const PdfForm = (validated) => {
       ...customization,
       [line]: e.target.value,
     }));
-    console.log("customization is", customization);
   };
 
   const showAppliedText = () => {
