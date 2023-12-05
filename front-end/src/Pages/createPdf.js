@@ -14,16 +14,18 @@ import { usePdfId } from "../PdfIdContext";
 import { generateService, savePdfService } from "../Services/pdfService";
 import SongList from "../Components/SongList";
 import { usePdfRequest } from "../PdfRequestContext";
-import { Document, Page, pdfjs } from "react-pdf";
+import { Document, Page, pdfjs } from "react-pdf/dist/esm/entry.webpack";
 import PdfForm from "../Components/PdfForm";
 import { TbArrowBigRightLineFilled } from "react-icons/tb";
 
 const CreatePdf = () => {
   // !!important
-  pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    "pdfjs-dist/build/pdf.worker.min.js",
-    import.meta.url
-  ).toString();
+//  pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+//    "pdfjs-dist/build/pdf.worker.min.js",
+//    import.meta.url
+//  ).toString();
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
 
   const [pdfData, setPdfData] = useState(null);
   const [fileName, setFileName] = useState("");
