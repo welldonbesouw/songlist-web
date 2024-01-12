@@ -26,7 +26,7 @@ RUN sudo apt-get install nodejs -y
 ENV NODE_OPTIONS=--max-old-space-size=4096
 
 # Install Nginx
-# RUN apt-get install nginx python3-certbot-nginx -y
+ RUN apt-get install nginx python3-certbot-nginx -y
 
 # Install Java 17 and Maven | sed command to fix the "Daemon using outdated libraries..."
 # RUN sudo apt-get install openjdk-17-jdk -y | sed "/#\$nrconf{restart} = 'i';/s/.*/\$nrconf{restart} = 'a';/" /etc/needrestart/needrestart.conf
