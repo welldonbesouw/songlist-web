@@ -18,7 +18,7 @@ CMD [ "npm", "start" ]
 
 FROM nginx:1.25.3-alpine
 
-RUN rm -rf /usr/share/nginx/html
+#RUN rm -rf /usr/share/nginx/html
 # Copy the built app from the previous stage to the Nginx public directory
 COPY --from=build /app/build /usr/share/nginx/html
 
