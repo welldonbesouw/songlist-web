@@ -1,5 +1,5 @@
-#FROM node:20.9.0-alpine3.18 AS build
-FROM node:20.9.0-alpine3.18
+FROM node:20.9.0-alpine3.18 AS build
+#FROM node:20.9.0-alpine3.18
 
 WORKDIR /app
 
